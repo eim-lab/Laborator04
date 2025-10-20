@@ -4,7 +4,7 @@ import ro.pub.cs.systems.eim.lab03.phonedialer.R;
 
 public interface Constants {
 
-    final public static int buttonIds[] = {
+    int[] buttonIds = {
             R.id.number_0_button,
             R.id.number_1_button,
             R.id.number_2_button,
@@ -18,6 +18,6 @@ public interface Constants {
             R.id.star_button,
             R.id.pound_button
     };
-    final public static int PERMISSION_REQUEST_CALL_PHONE = 1;
-    final public static int CONTACTS_MANAGER_REQUEST_CODE = 2017;
+    int PERMISSION_REQUEST_CALL_PHONE = 1;
+    int CONTACTS_MANAGER_REQUEST_CODE = 2017;
 }

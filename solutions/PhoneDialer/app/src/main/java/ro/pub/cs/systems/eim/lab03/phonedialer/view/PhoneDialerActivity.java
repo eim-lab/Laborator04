@@ -2,9 +2,7 @@ package ro.pub.cs.systems.eim.lab03.phonedialer.view;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.media.Image;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -22,13 +20,8 @@ import ro.pub.cs.systems.eim.lab03.phonedialer.general.Constants;
 public class PhoneDialerActivity extends AppCompatActivity {
 
     private EditText phoneNumberEditText;
-    private ImageButton callImageButton;
-    private ImageButton hangupImageButton;
-    private ImageButton backspaceImageButton;
-    private ImageButton contactsImageButton;
-    private Button genericButton;
 
-    private CallImageButtonClickListener callImageButtonClickListener = new CallImageButtonClickListener();
+    private final CallImageButtonClickListener callImageButtonClickListener = new CallImageButtonClickListener();
     private class CallImageButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
@@ -45,7 +38,7 @@ public class PhoneDialerActivity extends AppCompatActivity {
         }
     }
 
-    private HangupImageButtonClickListener hangupImageButtonClickListener = new HangupImageButtonClickListener();
+    private final HangupImageButtonClickListener hangupImageButtonClickListener = new HangupImageButtonClickListener();
     private class HangupImageButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
@@ -53,24 +46,24 @@ public class PhoneDialerActivity extends AppCompatActivity {
         }
     }
 
-    private BackspaceButtonClickListener backspaceButtonClickListener = new BackspaceButtonClickListener();
+    private final BackspaceButtonClickListener backspaceButtonClickListener = new BackspaceButtonClickListener();
     private class BackspaceButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             String phoneNumber = phoneNumberEditText.getText().toString();
-            if (phoneNumber.length() > 0) {
+            if (!phoneNumber.isEmpty()) {
                 phoneNumber = phoneNumber.substring(0, phoneNumber.length() - 1);
                 phoneNumberEditText.setText(phoneNumber);
             }
         }
     }
 
-    private ContactsImageButtonClickListener contactsImageButtonClickListener = new ContactsImageButtonClickListener();
+    private final ContactsImageButtonClickListener contactsImageButtonClickListener = new ContactsImageButtonClickListener();
     private class ContactsImageButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             String phoneNumber = phoneNumberEditText.getText().toString();
-            if (phoneNumber.length() > 0) {
+            if (!phoneNumber.isEmpty()) {
                 Intent intent = new Intent("ro.pub.cs.systems.eim.lab04.contactsmanager.intent.action.ContactsManagerActivity");
                 intent.putExtra("ro.pub.cs.systems.eim.lab04.contactsmanager.PHONE_NUMBER_KEY", phoneNumber);
                 startActivityForResult(intent, Constants.CONTACTS_MANAGER_REQUEST_CODE);
@@ -80,7 +73,7 @@ public class PhoneDialerActivity extends AppCompatActivity {
         }
     }
 
-    private GenericButtonClickListener genericButtonClickListener = new GenericButtonClickListener();
+    private final GenericButtonClickListener genericButtonClickListener = new GenericButtonClickListener();
     private class GenericButtonClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
@@ -94,27 +87,25 @@ public class PhoneDialerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_phone_dialer);
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        phoneNumberEditText = (EditText)findViewById(R.id.phone_number_edit_text);
-        callImageButton = (ImageButton)findViewById(R.id.call_image_button);
+        phoneNumberEditText = findViewById(R.id.phone_number_edit_text);
+        ImageButton callImageButton = findViewById(R.id.call_image_button);
         callImageButton.setOnClickListener(callImageButtonClickListener);
-        hangupImageButton = (ImageButton)findViewById(R.id.hangup_image_button);
+        ImageButton hangupImageButton = findViewById(R.id.hangup_image_button);
         hangupImageButton.setOnClickListener(hangupImageButtonClickListener);
-        backspaceImageButton = (ImageButton)findViewById(R.id.backspace_image_button);
+        ImageButton backspaceImageButton = findViewById(R.id.backspace_image_button);
         backspaceImageButton.setOnClickListener(backspaceButtonClickListener);
         for (int index = 0; index < Constants.buttonIds.length; index++) {
-            genericButton = (Button)findViewById(Constants.buttonIds[index]);
+            Button genericButton = findViewById(Constants.buttonIds[index]);
             genericButton.setOnClickListener(genericButtonClickListener);
         }
-        contactsImageButton = (ImageButton)findViewById(R.id.contacts_image_button);
+        ImageButton contactsImageButton = findViewById(R.id.contacts_image_button);
         contactsImageButton.setOnClickListener(contactsImageButtonClickListener);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        switch (requestCode) {
-            case Constants.CONTACTS_MANAGER_REQUEST_CODE:
-                Toast.makeText(this, "Activity returned with result " + resultCode, Toast.LENGTH_LONG).show();
-                break;
+        if (requestCode == Constants.CONTACTS_MANAGER_REQUEST_CODE) {
+            Toast.makeText(this, "Activity returned with result " + resultCode, Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -13,4 +13,5 @@
     <string name="star">*</string>
     <string name="pound">#</string>
     <string name="phone_error">Phone number is empty!</string>
+    
 </resources>
