@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".graphicuserinterface.ContactsManagerActivity">
+        <activity android:name=".graphicuserinterface.ContactsManagerActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="ro.pub.cs.systems.eim.lab04.contactsmanager.intent.action.ContactsManagerActivity" />
 

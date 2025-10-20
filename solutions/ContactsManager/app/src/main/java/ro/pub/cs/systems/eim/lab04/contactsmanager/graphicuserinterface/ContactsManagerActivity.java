@@ -29,11 +29,9 @@ public class ContactsManagerActivity extends AppCompatActivity {
     private EditText imEditText;
 
     private Button showHideAdditionalFieldsButton;
-    private Button saveButton;
-    private Button cancelButton;
     private LinearLayout additionalFieldsContainer;
 
-    private ButtonClickListener buttonClickListener = new ButtonClickListener();
+    private final ButtonClickListener buttonClickListener = new ButtonClickListener();
     private class ButtonClickListener implements View.OnClickListener {
 
         @Override
@@ -63,37 +61,21 @@ public class ContactsManagerActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(ContactsContract.Intents.Insert.ACTION);
                     intent.setType(ContactsContract.RawContacts.CONTENT_TYPE);
-                    if (name != null) {
-                        intent.putExtra(ContactsContract.Intents.Insert.NAME, name);
-                    }
-                    if (phone != null) {
-                        intent.putExtra(ContactsContract.Intents.Insert.PHONE, phone);
-                    }
-                    if (email != null) {
-                        intent.putExtra(ContactsContract.Intents.Insert.EMAIL, email);
-                    }
-                    if (address != null) {
-                        intent.putExtra(ContactsContract.Intents.Insert.POSTAL, address);
-                    }
-                    if (jobTitle != null) {
-                        intent.putExtra(ContactsContract.Intents.Insert.JOB_TITLE, jobTitle);
-                    }
-                    if (company != null) {
-                        intent.putExtra(ContactsContract.Intents.Insert.COMPANY, company);
-                    }
+                    intent.putExtra(ContactsContract.Intents.Insert.NAME, name);
+                    intent.putExtra(ContactsContract.Intents.Insert.PHONE, phone);
+                    intent.putExtra(ContactsContract.Intents.Insert.EMAIL, email);
+                    intent.putExtra(ContactsContract.Intents.Insert.POSTAL, address);
+                    intent.putExtra(ContactsContract.Intents.Insert.JOB_TITLE, jobTitle);
+                    intent.putExtra(ContactsContract.Intents.Insert.COMPANY, company);
                     ArrayList<ContentValues> contactData = new ArrayList<>();
-                    if (website != null) {
-                        ContentValues websiteRow = new ContentValues();
-                        websiteRow.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE);
-                        websiteRow.put(ContactsContract.CommonDataKinds.Website.URL, website);
-                        contactData.add(websiteRow);
-                    }
-                    if (im != null) {
-                        ContentValues imRow = new ContentValues();
-                        imRow.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE);
-                        imRow.put(ContactsContract.CommonDataKinds.Im.DATA, im);
-                        contactData.add(imRow);
-                    }
+                    ContentValues websiteRow = new ContentValues();
+                    websiteRow.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Website.CONTENT_ITEM_TYPE);
+                    websiteRow.put(ContactsContract.CommonDataKinds.Website.URL, website);
+                    contactData.add(websiteRow);
+                    ContentValues imRow = new ContentValues();
+                    imRow.put(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Im.CONTENT_ITEM_TYPE);
+                    imRow.put(ContactsContract.CommonDataKinds.Im.DATA, im);
+                    contactData.add(imRow);
                     intent.putParcelableArrayListExtra(ContactsContract.Intents.Insert.DATA, contactData);
                     startActivityForResult(intent, Constants.CONTACTS_MANAGER_REQUEST_CODE);
                     break;
@@ -111,23 +93,23 @@ public class ContactsManagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts_manager);
 
-        nameEditText = (EditText)findViewById(R.id.name_edit_text);
-        phoneEditText = (EditText)findViewById(R.id.phone_number_edit_text);
-        emailEditText = (EditText)findViewById(R.id.email_edit_text);
-        addressEditText = (EditText)findViewById(R.id.address_edit_text);
-        jobTitleEditText = (EditText)findViewById(R.id.job_title_edit_text);
-        companyEditText = (EditText)findViewById(R.id.company_edit_text);
-        websiteEditText = (EditText)findViewById(R.id.website_edit_text);
-        imEditText = (EditText)findViewById(R.id.im_edit_text);
+        nameEditText = findViewById(R.id.name_edit_text);
+        phoneEditText = findViewById(R.id.phone_number_edit_text);
+        emailEditText = findViewById(R.id.email_edit_text);
+        addressEditText = findViewById(R.id.address_edit_text);
+        jobTitleEditText = findViewById(R.id.job_title_edit_text);
+        companyEditText = findViewById(R.id.company_edit_text);
+        websiteEditText = findViewById(R.id.website_edit_text);
+        imEditText = findViewById(R.id.im_edit_text);
 
-        showHideAdditionalFieldsButton = (Button)findViewById(R.id.show_hide_additional_fields);
+        showHideAdditionalFieldsButton = findViewById(R.id.show_hide_additional_fields);
         showHideAdditionalFieldsButton.setOnClickListener(buttonClickListener);
-        saveButton = (Button)findViewById(R.id.save_button);
+        Button saveButton = findViewById(R.id.save_button);
         saveButton.setOnClickListener(buttonClickListener);
-        cancelButton = (Button)findViewById(R.id.cancel_button);
+        Button cancelButton = findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(buttonClickListener);
 
-        additionalFieldsContainer = (LinearLayout)findViewById(R.id.additional_fields_container);
+        additionalFieldsContainer = findViewById(R.id.additional_fields_container);
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -142,11 +124,9 @@ public class ContactsManagerActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        switch(requestCode) {
-            case Constants.CONTACTS_MANAGER_REQUEST_CODE:
-                setResult(resultCode, new Intent());
-                finish();
-                break;
+        if (requestCode == Constants.CONTACTS_MANAGER_REQUEST_CODE) {
+            setResult(resultCode, new Intent());
+            finish();
         }
     }
 }
