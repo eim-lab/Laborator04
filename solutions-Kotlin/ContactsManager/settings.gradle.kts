@@ -13,6 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "solutions-Kotlin"
-include(":ContactsManager:app")
-include(":PhoneDialer:app")
+rootProject.name = "ContactsManager"
+include(":app")
