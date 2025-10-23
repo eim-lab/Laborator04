@@ -1,6 +1,5 @@
 package ro.pub.cs.systems.eim.lab04.contactsmanager.graphicuserinterface
 
-import android.app.Activity
 import android.content.ContentValues
 import android.content.Intent
 import android.os.Bundle
@@ -39,6 +38,10 @@ class ContactsManagerActivity : AppCompatActivity() {
                     View.INVISIBLE -> {
                         showHideAdditionalFieldsButton.text = getString(R.string.hide_additional_fields)
                         additionalFieldsContainer.visibility = View.VISIBLE
+                    }
+
+                    View.GONE -> {
+                        // do nothing
                     }
                 }
             }
@@ -79,7 +82,7 @@ class ContactsManagerActivity : AppCompatActivity() {
                 startActivityForResult(intent, Constants.CONTACTS_MANAGER_REQUEST_CODE)
             }
             R.id.cancel_button -> {
-                setResult(Activity.RESULT_CANCELED, Intent())
+                setResult(RESULT_CANCELED, Intent())
                 finish()
             }
         }

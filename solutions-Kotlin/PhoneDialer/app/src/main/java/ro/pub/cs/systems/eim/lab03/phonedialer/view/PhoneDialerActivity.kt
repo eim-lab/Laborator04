@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import ro.pub.cs.systems.eim.lab03.phonedialer.R
 import ro.pub.cs.systems.eim.lab03.phonedialer.general.Constants
+import androidx.core.net.toUri
 
 class PhoneDialerActivity : AppCompatActivity() {
 
@@ -29,7 +30,7 @@ class PhoneDialerActivity : AppCompatActivity() {
             )
         } else {
             val intent = Intent(Intent.ACTION_CALL).apply {
-                data = Uri.parse("tel:${phoneNumberEditText.text}")
+                data = "tel:${phoneNumberEditText.text}".toUri()
             }
             startActivity(intent)
         }
@@ -59,7 +60,10 @@ class PhoneDialerActivity : AppCompatActivity() {
     }
 
     private val genericButtonClickListener = View.OnClickListener { view ->
-        phoneNumberEditText.setText(phoneNumberEditText.text.toString() + (view as Button).text.toString())
+        val button = view as? Button
+        if (button != null) {
+            phoneNumberEditText.setText(phoneNumberEditText.text.toString() + button.text.toString())
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,11 +74,11 @@ class PhoneDialerActivity : AppCompatActivity() {
         findViewById<ImageButton>(R.id.call_image_button).setOnClickListener(callImageButtonClickListener)
         findViewById<ImageButton>(R.id.hangup_image_button).setOnClickListener(hangupImageButtonClickListener)
         findViewById<ImageButton>(R.id.backspace_image_button).setOnClickListener(backspaceButtonClickListener)
-        
+
         for (buttonId in Constants.buttonIds) {
             findViewById<Button>(buttonId).setOnClickListener(genericButtonClickListener)
         }
-        
+
         findViewById<ImageButton>(R.id.contacts_image_button).setOnClickListener(contactsImageButtonClickListener)
     }
 
