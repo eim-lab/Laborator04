@@ -5,24 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
     tools:context="ro.pub.cs.systems.eim.lab03.phonedialer.view.PhoneDialerActivity">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="64dp"/>
     <EditText
         android:id="@+id/phone_number_edit_text"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:minHeight="56dp"
-        android:padding="16dp"
         android:inputType="phone"
         android:enabled="false"
         android:gravity="center"
+        android:layout_gravity="center"
+        android:minWidth="200dp"
+        android:minHeight="56dp"
         android:textSize="18sp"/>
 
     <GridLayout
