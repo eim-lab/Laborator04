@@ -15,6 +15,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        buildConfig = true
+    }
     namespace 'ro.pub.cs.systems.eim.lab04.contactsmanager'
 }
 
